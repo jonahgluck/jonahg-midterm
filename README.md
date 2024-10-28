@@ -86,12 +86,6 @@ Polarity, ranging from -1 (negative) to 1 (positive), and subjectivity, ranging 
 
 An attempt was made to enhance the model by identifying the presence of specific positive and negative keywords within the review text. Positive words included "loved," "excellent," and "amazing," while negative words included "terrible," "worst," and "boring." A binary feature was created indicating whether any of these keywords appeared in a review.
 
-**Implementation:**
-
-- Compiled lists of positive and negative keywords commonly associated with strong sentiments.
-- Scanned each review for the presence of these keywords.
-- Created binary features `contains_positive_keyword` and `contains_negative_keyword`.
-
 **Results:**
 
 Despite the intuitive appeal of this approach, incorporating these keyword features did not significantly improve the model's accuracy. The simplicity of the keyword matching failed to capture the nuances of language used in reviews.
@@ -110,27 +104,11 @@ To reduce computational time, VADER, using `SentimentIntensityAnalyzer` from `nl
 
 Parallel processing was employed using `ThreadPoolExecutor` for concurrent processing, which reduced feature extraction time and enhanced scalability.
 
-### Feature Selection
-
-To avoid overfitting and reduce complexity, feature importance was analyzed and redundant features were removed. The final feature set included `HelpfulnessNumerator`, `HelpfulnessDenominator`, `Helpfulness`, `Polarity`, `Subjectivity`, `contains_positive_keyword`, `contains_negative_keyword`, `Year`, and `Month`.
-
 ## Performance Optimizations
-
-### Hyperparameter Tuning
-
-Hyperparameter tuning techniques such as grid search, random search, and Bayesian optimization were used. Stratified k-fold cross-validation was employed to maintain class distribution.
-
-### Regularization in XGBoost
-
-Regularization parameters `lambda` (L2) and `alpha` (L1) were tuned in XGBoost to prevent overfitting and improve generalization.
 
 ### Handling Class Imbalance
 
 Class imbalance was addressed using strategies like resampling (oversampling minority classes), adjusting class weights to penalize misclassifications, and using weighted F1-score as an evaluation metric.
-
-### Computational Efficiency
-
-Computational efficiency was improved by enabling parallel processing in XGBoost and during sentiment analysis, leveraging multi-core processors, and managing memory usage effectively through batch processing.
 
 ## Assumptions and Observations
 
@@ -152,21 +130,9 @@ It was assumed that higher helpfulness scores correlate with the reliability of 
 
 Accuracy was defined as the ratio of correct predictions over total instances but was limited as it does not account for class imbalance.
 
-### Precision, Recall, and F1-Score
-
-These metrics were calculated for each class to understand per-class performance.
-
 ### Confusion Matrix
 
 The confusion matrix provided a detailed breakdown of predictions, revealing that misclassifications often occurred between adjacent ratings.
-
-### ROC and AUC
-
-The ROC curve and AUC were applied using a one-vs-rest approach for multi-class classification to measure the model's ability to distinguish between classes.
-
-### Cross-Validation Scores
-
-Stratified k-fold cross-validation showed consistent performance across folds.
 
 ## Results
 
