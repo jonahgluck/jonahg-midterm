@@ -32,7 +32,7 @@ The unsatisfactory performance of these models highlighted their inability to ca
 
 ### Rationale for Boosting
 
-Boosting algorithms improve predictive performance by combining multiple weak learners to form a strong learner. They are adept at handling complex relationships and are less prone to overfitting when properly tuned. Advantages of boosting include complex pattern recognition, as they can capture nonlinear relationships, improved robustness with better generalization to unseen data, and the ability to provide insights into which features contribute most to predictions.
+Boosting algorithms improve predictive performance by combining multiple weak learners to form a strong learner. They are adept at handling complex relationships and are less prone to overfitting when properly tuned. Advantages of boosting include complex pattern recognition, as they can capture nonlinear relationships, improved robustness with better generalization to unseen data, and the ability to provide insights into which features contribute most to predictions. In a dataset that is skewed, as this one is, boosting algorithms seem to perform the best.
 
 ### Selection of Boosting Algorithms
 
