@@ -2,7 +2,7 @@
 
 ## Abstract
 
-This paper presents the development of a predictive model aimed at accurately classifying Amazon Movie Reviews based on star ratings, utilizing ensemble boosting algorithms and feature engineering techniques. The challenge was to achieve high predictive accuracy without employing deep learning methods. The final model combines three boosting algorithms—**HistGradientBoostingClassifier**, **GradientBoostingClassifier**, and **XGBClassifier**—using a soft voting ensemble approach. Feature engineering involved extracting sentiment scores using TextBlob and creating a helpfulness ratio from review metadata. The model achieved an accuracy of approximately 57%. This paper details the strategy, implementation, and evaluation of the model, highlighting the effectiveness of ensemble methods and feature engineering in text classification tasks.
+This paper presents the development of a predictive model aimed at accurately classifying Amazon Movie Reviews based on star ratings, utilizing ensemble boosting algorithms and feature engineering techniques. The challenge was to achieve high predictive accuracy without employing deep learning methods. The final model combines three boosting algorithms—**HistGradientBoostingClassifier**, **GradientBoostingClassifier**, and **XGBClassifier**—using a soft voting ensemble approach. Feature engineering involved extracting sentiment scores using TextBlob and creating a helpfulness ratio from review metadata. Additionally, attempts were made to enhance the model by identifying positive and negative keywords such as "loved," "terrible," and "excellent," but this did not significantly improve results. The model achieved an accuracy of approximately 58%. This paper details the strategy, implementation, and evaluation of the model, highlighting the effectiveness of ensemble methods and feature engineering in text classification tasks.
 
 ## Introduction
 
@@ -82,6 +82,20 @@ The helpfulness score was calculated as the ratio of `HelpfulnessNumerator` to `
 
 Polarity, ranging from -1 (negative) to 1 (positive), and subjectivity, ranging from 0 (objective) to 1 (subjective), were extracted using TextBlob applied to `reviewText`. Efficient text processing techniques were used for scalability.
 
+#### Keyword Analysis
+
+An attempt was made to enhance the model by identifying the presence of specific positive and negative keywords within the review text. Positive words included "loved," "excellent," and "amazing," while negative words included "terrible," "worst," and "boring." A binary feature was created indicating whether any of these keywords appeared in a review.
+
+**Implementation:**
+
+- Compiled lists of positive and negative keywords commonly associated with strong sentiments.
+- Scanned each review for the presence of these keywords.
+- Created binary features `contains_positive_keyword` and `contains_negative_keyword`.
+
+**Results:**
+
+Despite the intuitive appeal of this approach, incorporating these keyword features did not significantly improve the model's accuracy. The simplicity of the keyword matching failed to capture the nuances of language used in reviews.
+
 #### Temporal Features
 
 The `Time` feature was converted to datetime objects, and additional features such as `Year` and `Month` were extracted to capture temporal trends in reviews.
@@ -98,7 +112,7 @@ Parallel processing was employed using `ThreadPoolExecutor` for concurrent proce
 
 ### Feature Selection
 
-To avoid overfitting and reduce complexity, feature importance was analyzed and redundant features were removed. The final feature set included `HelpfulnessNumerator`, `HelpfulnessDenominator`, `Helpfulness`, `Polarity`, `Subjectivity`, `Year`, and `Month`.
+To avoid overfitting and reduce complexity, feature importance was analyzed and redundant features were removed. The final feature set included `HelpfulnessNumerator`, `HelpfulnessDenominator`, `Helpfulness`, `Polarity`, `Subjectivity`, `contains_positive_keyword`, `contains_negative_keyword`, `Year`, and `Month`.
 
 ## Performance Optimizations
 
@@ -122,11 +136,15 @@ Computational efficiency was improved by enabling parallel processing in XGBoost
 
 ### Assumptions
 
-It was assumed that higher helpfulness scores correlate with the reliability of reviews, sentiment polarity influences star ratings, and time affects review sentiments.
+It was assumed that higher helpfulness scores correlate with the reliability of reviews, sentiment polarity influences star ratings, and the presence of specific positive or negative keywords would enhance the model's predictive power.
 
 ### Observations
 
-A strong alignment between sentiment polarity and star ratings was observed. High subjectivity was linked to extreme ratings. High helpfulness was associated with consensus ratings, and slight shifts in ratings over time were noted.
+- **Polarity-Rating Correlation:** A strong alignment between sentiment polarity and star ratings was observed.
+- **Keyword Feature Impact:** Incorporating positive and negative keyword features did not significantly boost model performance, suggesting that sentiment is better captured through comprehensive analysis rather than keyword presence.
+- **Subjectivity Insights:** High subjectivity was linked to extreme ratings.
+- **Helpfulness Patterns:** High helpfulness was associated with consensus ratings.
+- **Temporal Trends:** Slight shifts in ratings over time were noted.
 
 ## Evaluation Metrics
 
@@ -152,7 +170,7 @@ Stratified k-fold cross-validation showed consistent performance across folds.
 
 ## Results
 
-The final model achieved an accuracy of approximately 58%. High precision and recall were observed for majority classes, with acceptable performance for minority classes. The ensemble model outperformed individual models, demonstrating improved stability and accuracy.s
+The final model achieved an accuracy of approximately 58%. High precision and recall were observed for majority classes, with acceptable performance for minority classes. The inclusion of positive and negative keyword features did not yield a significant improvement in accuracy. The ensemble model outperformed individual models, demonstrating improved stability and accuracy.
 
 ### Model Comparison
 
@@ -160,7 +178,23 @@ The ensemble approach proved superior to individual models, highlighting the ben
 
 ## Conclusion
 
-The project successfully developed a robust predictive model for classifying Amazon Movie Reviews using ensemble boosting algorithms and feature engineering. Key findings include the effectiveness of boosting algorithms in handling complex data with imbalances, the critical importance of feature engineering for model performance, the advantages of ensemble methods in enhancing accuracy and robustness, and the necessity of model optimization through hyperparameter tuning and regularization.
+The project successfully developed a predictive model for classifying Amazon Movie Reviews using ensemble boosting algorithms and feature engineering. Key findings include:
+
+- The effectiveness of boosting algorithms in handling complex data.
+- The critical importance of feature engineering for model performance.
+- The limited impact of simple keyword-based features in enhancing model accuracy.
+- The advantages of ensemble methods in enhancing accuracy and robustness.
+- The necessity of model optimization through hyperparameter tuning and regularization.
+
+### Future Work
+
+Future work could involve:
+
+- Incorporating advanced text features such as TF-IDF, word embeddings, or topic modeling to capture more nuanced linguistic patterns.
+- Experimenting with deep learning techniques like neural networks for potentially higher accuracy.
+- Utilizing model interpretability tools like SHAP or LIME to better understand feature contributions.
+- Including reviewer history for user behavior analysis.
+- Implementing automated optimization through AutoML tools.
 
 ## References
 
@@ -186,3 +220,6 @@ The project successfully developed a robust predictive model for classifying Ama
 
 [11] Lundberg, S. M., & Lee, S.-I. (2017). A Unified Approach to Interpreting Model Predictions. *Advances in Neural Information Processing Systems*, 30.
 
+---
+
+*Note: This paper is prepared as part of a project to develop a predictive model for Amazon Movie Reviews classification, focusing on non-deep learning methods.*
