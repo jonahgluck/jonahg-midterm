@@ -2,7 +2,7 @@
 
 ## Abstract
 
-This paper presents the development of a predictive model aimed at accurately classifying Amazon Movie Reviews based on star ratings, utilizing ensemble boosting algorithms and feature engineering techniques. The challenge was to achieve high predictive accuracy without employing deep learning methods. The final model combines three boosting algorithms—**HistGradientBoostingClassifier**, **GradientBoostingClassifier**, and **XGBClassifier**—using a soft voting ensemble approach. Feature engineering involved extracting sentiment scores using TextBlob and creating a helpfulness ratio from review metadata. Additionally, attempts were made to enhance the model by identifying positive and negative keywords such as "loved," "terrible," and "excellent," but this did not significantly improve results. The model achieved an accuracy of approximately 58%. This paper details the strategy, implementation, and evaluation of the model, highlighting the effectiveness of ensemble methods and feature engineering in text classification tasks.
+This paper presents the development of a predictive model aimed at accurately classifying Amazon Movie Reviews based on star ratings, utilizing ensemble boosting algorithms and feature engineering techniques. The challenge was to achieve high predictive accuracy without employing deep learning methods. The final model combines three boosting algorithms—**HistGradientBoostingClassifier**, **GradientBoostingClassifier**, and **XGBClassifier**—using a soft voting ensemble approach. Feature engineering involved extracting sentiment scores using TextBlob and creating a helpfulness ratio from review metadata. Additionally, attempts were made to enhance the model by identifying positive and negative keywords such as "loved," "terrible," and "excellent," but this did not significantly improve results. The model achieved an accuracy of approximately 56%. This paper details the strategy, implementation, and evaluation of the model, highlighting the effectiveness of ensemble methods and feature engineering in text classification tasks.
 
 ## Introduction
 
@@ -170,7 +170,7 @@ Stratified k-fold cross-validation showed consistent performance across folds.
 
 ## Results
 
-The final model achieved an accuracy of approximately 58%. High precision and recall were observed for majority classes, with acceptable performance for minority classes. The inclusion of positive and negative keyword features did not yield a significant improvement in accuracy. The ensemble model outperformed individual models, demonstrating improved stability and accuracy.
+The final model achieved an accuracy of approximately 56%. High precision and recall were observed for majority classes, with acceptable performance for minority classes. The inclusion of positive and negative keyword features did not yield a significant improvement in accuracy. The ensemble model outperformed individual models, demonstrating improved stability and accuracy.
 
 ### Model Comparison
 
